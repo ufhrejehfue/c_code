@@ -22,10 +22,10 @@ void cal(int (*pf)(int, int))
 	int x = 0;
 	int y = 0;
 	int ret = 0;
-	printf_s("ÇëÊäÈëÁ½¸ö²Ù×÷Êı£º \n");
+	printf_s("è¯·è¾“å…¥ä¸¤ä¸ªæ“ä½œæ•°ï¼š \n");
 	scanf_s("%d %d", &x, &y);
 	ret = pf(x, y);
-	printf_s("½á¹ûÎª£º%d \n", ret);
+	printf_s("ç»“æœä¸ºï¼š%d \n", ret);
 }
 void menu()
 {
@@ -42,7 +42,7 @@ int main()
 	do 
 	{
 		menu();
-		printf_s("ÇëÑ¡Ôñ£º ");
+		printf_s("è¯·é€‰æ‹©ï¼š ");
 		scanf_s("%d", &input);
 		switch (input)
 		{
@@ -59,10 +59,10 @@ int main()
 			cal(Div);
 			break;
 		case 0:
-			printf_s("ÍË³ö¼ÆËãÆ÷\n");
+			printf_s("é€€å‡ºè®¡ç®—å™¨\n");
 			break;
 		default:
-			printf_s("Ñ¡Ôñ´íÎó\n");
+			printf_s("é€‰æ‹©é”™è¯¯\n");
 			break;
 		}
 	} while (input);
