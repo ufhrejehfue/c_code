@@ -100,6 +100,27 @@ void* my_memcpy(void* dest, const void* src, size_t num)
 	}
 	return ret;
 }
+void*  my_memove(void* dest,const void* src,size_t num)
+{
+	assert(dest &&src);
+	if(dest<src)
+	{
+		while(num--)
+		{
+			*(char*)dest=*(char*)src;
+			dest=(char*)dest+1;
+			src=(char*)src+1;
+		}
+		//前到后
+	}
+	else
+	{
+     while(num--)
+	  {
+		*((char*)dest+num)=*((char*)src+num);
+	  }
+	}
+}
 
 //strtok
 // �и��ַ���
