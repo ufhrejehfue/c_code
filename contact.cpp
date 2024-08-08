@@ -1,4 +1,4 @@
-#define EXAMPLE_MACRO_NAME£©
+#define EXAMPLE_MACRO_NAMEï¿½ï¿½
 #include"contact.h.cpp"
 
 void menu()
@@ -11,39 +11,60 @@ void menu()
 	printf("************************************\n");
 }
 
-void InitContact(Contact *p)
+int InitContact(Contact *p)
 {
 	assert(p);
 	p->count = 0;
-	memset(p->data, 0, sizeof(p->data));
+	p->data=(People*)malloc(DEFAULT_sz,sizeof(People));
+	if(p->data==NULL)
+	{
+		printf("%s\n",strerror(errno));
+		return 1;
+	}
+	p->capacity=3;
+	return 0;
 }
 
-void AddContact(Contact* p)
+int  AddContact(Contact* p)
 {
 	assert(p);
-	if (p->count == MAX)
-	{
-		printf("Í¨Ñ¶Â¼ÂúÁË£¬ÎŞ·¨Ìí¼Ó\n");
-		return;
-	}
-	else
-	printf("ÇëÊäÈëÃû×Ö£º>");
+	CheckCapacity(p);
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½>");
 	scanf_s("%s", p->data[p->count].name,20);
-	printf("ÇëÊäÈëÄêÁä£º>");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ä£º>");
 	scanf_s("%d", &(p->data[p->count].age));
-	printf("ÇëÊäÈëĞÔ±ğ£º>");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½>");
 	scanf_s("%s", (p->data[p->count].sex),10);
-	printf("ÇëÊäÈëµç»°£º>");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç»°ï¿½ï¿½>");
 	scanf_s("%s", (p->data[p->count].tele),12);
-	printf("ÇëÊäÈëµØÖ·£º>");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½>");
 	scanf_s("%s", (p->data[p->count].addr),30);
+}
+
+void CheckCapacity(Contact* p)
+{
+  if (p->count == p->capacity)
+  {
+  	People* ptr=(People*)realloc(p->data,(p->capacity+2)*sizeof(People));
+  	if(ptr==NULL)
+  	{
+  		printf("AddContact::%s",strerror(errno));
+  		return ;
+  	}
+  else
+  {
+  	p->data=ptr;
+  	p->capacity+=2;
+  	printf("å¢å®¹æˆåŠŸ\n");
+  }
+  }
 }
 
 void ShowContact(Contact* p)
 {
 	assert(p);
 	int i = 0;
-	printf("%20s\t%5s\t%5s\t%12s\t%30s\n", "Ãû×Ö", "ÄêÁä", "ĞÔ±ğ", "µç»°", "µØÖ·");
+	printf("%20s\t%5s\t%5s\t%12s\t%30s\n", "ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", "ï¿½Ô±ï¿½", "ï¿½ç»°", "ï¿½ï¿½Ö·");
 	for (i = 0; i < p->count; i++)
 	{
 		printf("%20s\t%5d\t%5s\t%12s\t%30s\n", p->data[i].name, p->data[i].age,
@@ -71,20 +92,20 @@ void DelContact(Contact* p)
 	assert(p);
 	if (p->count == 0)
 	{
-		printf("Í¨Ñ¶Â¼Îª¿Õ£¬Ã»ÓĞĞÅÏ¢¿ÉÒÔÉ¾³ı\n");
+		printf("Í¨Ñ¶Â¼Îªï¿½Õ£ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½\n");
 		return;
 	}
-	printf("ÇëÊäÈëÒªÉ¾³ıÈËµÄÃû×Ö");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÉ¾ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½");
 	scanf_s("%s", name,30);
-	//1.²éÕÒ
+	//1.ï¿½ï¿½ï¿½ï¿½
 	int pos = FindByName(p, name);
 	int i = 0;
 	if (pos == -1)
 	{
-		printf("ÒªÉ¾³ıµÄÈË²»ÔÚ\n");
+		printf("ÒªÉ¾ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½\n");
 		return;
 	}
-	//2.É¾³ı
+	//2.É¾ï¿½ï¿½
 	for (i = pos; i < p->count; i++)
 	{
 		p->data[i] = p->data[i + 1];
@@ -96,17 +117,17 @@ void SearchContact(Contact* p)
 {
 	assert(p);
 	char name[MAX_NAME] = { 0 };
-	printf("ÇëÊäÈëÒªÉ¾³ıÈËµÄÃû×Ö");
+	printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÉ¾ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½");
 	scanf_s("%s", name,30);
 	int pos = FindByName(p, name);
 	int i = 0;
 	if (pos == -1)
 	{
-		printf("Òª²éÕÒµÄÈË²»ÔÚ\n");
+		printf("Òªï¿½ï¿½ï¿½Òµï¿½ï¿½Ë²ï¿½ï¿½ï¿½\n");
 		return;
 	}
-	//´òÓ¡
-	printf("%20s\t%5s\t%5s\t%12s\t%30s\n", "Ãû×Ö", "ÄêÁä", "ĞÔ±ğ", "µç»°", "µØÖ·");
+	//ï¿½ï¿½Ó¡
+	printf("%20s\t%5s\t%5s\t%12s\t%30s\n", "ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", "ï¿½Ô±ï¿½", "ï¿½ç»°", "ï¿½ï¿½Ö·");
 	printf("%20s\t%5d\t%5s\t%12s\t%30s\n", p->data[i].name, p->data[i].age,
 			p->data[i].sex, p->data[i].tele, p->data[i].addr);
 }
@@ -116,22 +137,30 @@ int cm_peo_by_name(const void* e1,const void* e2)
 	return strcmp(((People*)e1)->name, ((People*)e1)->name);
 
 }
+
 void SortContact(Contact* p)
 {
 	assert(p);
-	qsort(pc->data, pc->count, sizeof(People),cm_peo_by_name);
-	printf("ÅÅĞò³É¹¦:\n");
+	qsort(p->data, p->count, sizeof(People),cm_peo_by_name);
+	printf("ï¿½ï¿½ï¿½ï¿½É¹ï¿½:\n");
+}
+
+void DestroyContact(Contact* p)
+{
+	assert(p);
+	free(p->data);
+	p->data=NULL;
 }
 int main()
 {
 	int input = 0;
 	Contact con;//Í¨Ñ¶Â¼
-	//³õÊ¼»¯Í¨Ñ¶Â¼
+	//ï¿½ï¿½Ê¼ï¿½ï¿½Í¨Ñ¶Â¼
 	InitContact(&con);
 	do
 	{
 		menu();
-		printf("ÇëÑ¡Ôñ£º>");
+		printf("ï¿½ï¿½Ñ¡ï¿½ï¿½>");
 		scanf_s("%d", &input);
 		switch (input)
 		{
@@ -143,6 +172,7 @@ int main()
 			break;
 		case 3:
 			SearchContact(&con);
+			break;
 		case 4:
 			break;
 		case 5:
@@ -151,9 +181,9 @@ int main()
 			SortContact(&con);
 			break;
 		case 0:
-			printf("ÍË³öÍ¨Ñ¶\n");
+			printf("ï¿½Ë³ï¿½Í¨Ñ¶\n");
 		default:
-			printf("Ñ¡Ôñ´íÎó\n");
+			printf("Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½\n");
 			break;
 		}
 	} while (input);
