@@ -2,13 +2,14 @@
 #include<stdio.h>
 #include<assert.h>
 #include<stdlib.h>
+#define DEFAULT_sz 3
 #define MAX 100
 #define MAX_NAME 20
 #define MAX_SEX 10
 #define MAX_TELE 12
 #define MAX_ADDR 30
-//ÀàĞÍµÄÉùÃ÷
-//ÈËµÄĞÅÏ¢
+//ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½Ëµï¿½ï¿½ï¿½Ï¢
 typedef struct People
 {
 	char name[MAX_NAME];
@@ -19,21 +20,38 @@ typedef struct People
 
 }people;
 
-//Í¨Ñ¶Â¼
 typedef struct Contact
 {
-	People data[100];//´æ·ÅÈËµÄĞÅÏ¢
-	int count;//¼ÇÂ¼Í¨Ñ¶Â¼ÖĞÊµ¼ÊÈËÊı
+	People* data;
+	int count;
+	//å½“å‰é€šè®¯å½•å®¹é‡
+	int capacity;
 }Contact;
 
-void InitContact(Contact* p);//³õÊ¼»¯Í¨Ñ¶Â¼
+enum Switch
+{
+	ADD=1,
+   DELITE,
+	SEARCH,
+   MODIFY,
+	SHOW,
+	SORT,
+	EXTI,
+};
 
-void AddContact(Contact* p);//Ôö¼ÓÁªÏµÈËÍ¨Ñ¶Â¼
 
-void ShowContact(Contact* p);//´òÓ¡Í¨Ñ¶Â¼ÖĞµÄĞÅÏ¢
+void CheckCapacity(Contact* p);
 
-void DelContact(Contact* p);//É¾³ıÍ¨Ñ¶Â¼ÀïÃæĞÅÏ¢
+void DestroyContact(Contact* p);
 
-void SearchContact(Contact* p);//Ñ°ÕÒÍ¨Ñ¶Â¼ÀïĞÅÏ¢
+int  InitContact(Contact* p);//ï¿½ï¿½Ê¼ï¿½ï¿½Í¨Ñ¶Â¼
 
-void SortContact(Contact* p);//Í¨Ñ¶Â¼ĞÅÏ¢ÅÅĞò
+int  AddContact(Contact* p);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Í¨Ñ¶Â¼
+
+void ShowContact(Contact* p);//ï¿½ï¿½Ó¡Í¨Ñ¶Â¼ï¿½Ğµï¿½ï¿½ï¿½Ï¢
+
+void DelContact(Contact* p);//É¾ï¿½ï¿½Í¨Ñ¶Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+
+void SearchContact(Contact* p);//Ñ°ï¿½ï¿½Í¨Ñ¶Â¼ï¿½ï¿½ï¿½ï¿½Ï¢
+
+void SortContact(Contact* p);//Í¨Ñ¶Â¼ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
